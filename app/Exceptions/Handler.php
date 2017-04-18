@@ -54,32 +54,32 @@ class Handler extends ExceptionHandler
         }
 
         $status = 200;
-        $success = TRUE;
-        $response = NULL;
+        $success = true;
+        $response = null;
 
         if ($e instanceof HttpResponseException) {
-          $success = FALSE;
+          $success = false;
           $status = Response::HTTP_INTERNAL_SERVER_ERROR;
           $response = $e->getResponse();
         } elseif ($e instanceof MethodNotAllowedHttpException) {
-          $success = FALSE;
+          $success = false;
           $status = Response::HTTP_METHOD_NOT_ALLOWED;
           $e = new MethodNotAllowedHttpException([], 'HTTP_METHOD_NOT_ALLOWED', $e);
         } elseif ($e instanceof NotFoundHttpException) {
-          $success = FALSE;
+          $success = false;
           $status = Response::HTTP_NOT_FOUND;
           $e = new NotFoundHttpException('HTTP_NOT_FOUND', $e);
         } elseif ($e instanceof AuthorizationException) {
-          $success = FALSE;
+          $success = false;
           $status = Response::HTTP_FORBIDDEN;
           $e = new AuthorizationException('HTTP_FORBIDDEN', $status);
         } elseif ($e instanceof \Dotenv\Exception\ValidationException && $e->getResponse()) {
-          $success = FALSE;
+          $success = false;
           $status = Response::HTTP_BAD_REQUEST;
           $e = new \Dotenv\Exception\ValidationException('HTTP_BAD_REQUEST', $status, $e);
           $response = $e->getResponse();
         } elseif ($e) {
-          $success = FALSE;
+          $success = false;
           $status = Response::HTTP_INTERNAL_SERVER_ERROR;
           $e = new HttpException($status, 'HTTP_INTERNAL_SERVER_ERROR');
         }
