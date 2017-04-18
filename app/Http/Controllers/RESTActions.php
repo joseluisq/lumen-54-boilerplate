@@ -10,7 +10,7 @@ trait RESTActions {
     public function all()
     {
         $m = self::MODEL;
-        return $this->respond(Response::HTTP_OK, $m::all());
+        return $this->respond($m::all());
     }
 
     public function get($id)
@@ -19,17 +19,17 @@ trait RESTActions {
         $model = $m::find($id);
 
         if(is_null($model)){
-            return $this->respond(Response::HTTP_NOT_FOUND);
+            return $this->respond([], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->respond(Response::HTTP_OK, $model);
+        return $this->respond($model);
     }
 
     public function add(Request $request)
     {
         $m = self::MODEL;
         $this->validate($request, $m::$rules);
-        return $this->respond(Response::HTTP_CREATED, $m::create($request->all()));
+        return $this->respond($m::create($request->all()), Response::HTTP_CREATED);
     }
 
     public function put(Request $request, $id)
@@ -39,11 +39,11 @@ trait RESTActions {
         $model = $m::find($id);
 
         if(is_null($model)){
-            return $this->respond(Response::HTTP_NOT_FOUND);
+            return $this->respond([], Response::HTTP_NOT_FOUND);
         }
 
         $model->update($request->all());
-        return $this->respond(Response::HTTP_OK, $model);
+        return $this->respond($model);
     }
 
     public function remove($id)
@@ -51,14 +51,14 @@ trait RESTActions {
         $m = self::MODEL;
 
         if(is_null($m::find($id))){
-            return $this->respond(Response::HTTP_NOT_FOUND);
+            return $this->respond([], Response::HTTP_NOT_FOUND);
         }
 
         $m::destroy($id);
-        return $this->respond(Response::HTTP_NO_CONTENT);
+        return $this->respond([], Response::HTTP_NO_CONTENT);
     }
 
-    protected function respond($status, $data = [])
+    protected function respond($data = [], $status = Response::HTTP_OK)
     {
         return response()->json($data, $status);
     }
