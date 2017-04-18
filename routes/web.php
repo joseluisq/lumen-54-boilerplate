@@ -13,7 +13,5 @@
 
 // GET /api/v1
 $app->group(['prefix' => 'v1', 'middleware' => 'auth'], function () use ($app) {
-    $app->get('/', function () use ($app) {
-        return response()->json(['version' => $app->version()]);
-    });
+    $app->get('/', 'ExampleController@version');
 });

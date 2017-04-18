@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Guztav\Client;
-
 class ExampleController extends Controller
 {
 
-    public function test()
+    /**
+     * This example shows the current Lumen version.
+     *
+     * @return \Response
+     */
+    public function version()
     {
-        return request()->json(['ok']);
+        return response()->json([
+            'version' => app()->version()
+        ]);
     }
 
 }
