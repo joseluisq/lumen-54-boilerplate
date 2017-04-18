@@ -22,6 +22,7 @@ php -S localhost:8002 -t ./public
 
 - HTTP Exception Handler with JSON responses. [reference](https://gist.github.com/joseluisq/bea6220cca5e1441d550b27409283497)
 - Fecades and [Eloquent](https://laravel.com/docs/5.4/eloquent) enabled by default.
+- [Lumen Passport](https://github.com/dusterio/lumen-passport) configured for OAuth2 support.
 - [Lumen Generators](https://github.com/webNeat/lumen-generators) with REST actions trait.
 - `.editorconfig` settings.
 - ...
